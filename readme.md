@@ -286,3 +286,52 @@ public class ContractEmployee extends Employee
 		}
 
 ```
+
+##### Chapter 9( Query Parameters, Named queries)	
+
+- Positional parameters	
+
+```
+String queryString = "select userId from my_users where userName=?0 and password=?1";
+			
+		
+		Query query = session.createQuery(queryString);
+		
+		query.setParameter(0, "Amit");
+		query.setParameter(1, "123");
+
+```
+
+- Named parameters
+
+```
+		String queryString = "select userId from my_users where userName=:userName and password=:password";
+			
+		
+		Query query = session.createQuery(queryString);
+		
+		query.setParameter("userName", "Amit");
+		query.setParameter("password", "123");
+
+```
+
+- Named Query
+
+```
+@Entity(name = "Employee")
+@NamedQueries({
+@NamedQuery(name="findByName",query="from Employee where empName=:empName"),
+@NamedQuery(name="MoreThanSalary",query="from Employee where salary>:salary")
+})
+public class Employee{
+...........
+...........
+
+		Query query = session.getNamedQuery("findByName");
+		
+		query.setParameter("empName", "Amit");
+
+		List<Employee> list = query.list();
+
+
+```
